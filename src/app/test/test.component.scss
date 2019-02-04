@@ -1,0 +1,14 @@
+
+//override bootstrap
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.75rem + 2px)  !important;
+}
+
+tabset.tab-container {
+    direction: rtl;
+}
+
+.card label {
+    display: block;
+}
+

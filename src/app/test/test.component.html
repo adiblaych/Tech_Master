@@ -1,0 +1,84 @@
+<div class="panel-header  ">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">בחר</h5>
+                </div>
+                <div class="card-body">
+                    <!-- <app-test-form></app-test-form> -->
+                    <div role="form" class="lenForm">
+                        <!-- <div class="form-group">
+                <label>Checkboxes</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value=""> Checkbox 1
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value=""> Checkbox 2
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value=""> Checkbox 3
+                    </label>
+                </div>
+            </div> -->
+
+                        <div class="form-group">
+                            <label>Selects languege</label>
+                            <select class="form-control" [(ngModel)]="selectedLang" (change)="getSubLang()">
+                                <option *ngFor="let Plang of PlangList" [ngValue]="Plang">{{Plang.primaryName}}</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-secondary" (click)="updateTest()">Submit Button</button>
+                        <button type="reset" class="btn btn-secondary" (click)="resetLang()">Reset Button</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showTest" class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="title">{{langName}}</h4><br>
+                    <p class="category">{{foreword}}</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <tabset>
+                            <tab name="easy" heading="קל" id="tab1">שאלות ברמה 1</tab>
+                            <tab name="medium" heading="בינוני" id="tab2">שאלות ברמה 2 </tab>
+                            <tab name="hard" heading="קשה" id="tab3">שאלות ברמה 3 </tab>
+                        </tabset>
+                    </div>
+                    <div class="input-demo radio-demo">
+                        <form [formControl] = "form">
+                            <label class="question">{{currentQuiz.questionText}}</label>
+                            <div *ngFor="let ans of answersByQuestion; index as i">
+                                <input id={{i}} [(ngModel)]="answersTest" name="inlineRadioOptions" type="radio" [value]="ans" required>
+                                <label>{{ans.answerText}}</label>
+                            </div>
+                            <button *ngIf="ngIf" class="btn btn-secondary" (click)="nextQuestion()">Next</button>
+                            <button *ngIf="!ngIf" class="btn btn-secondary" (click)="check()">Check Test</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label *ngIf="!ngIf">ענית נכון על {{numTrue}} מתוך {{numQst}} שאלות</label>
+         <form *ngIf="showAns"> 
+            <div *ngFor="let qst of questionsByLang; index as i">
+                <label>{{qst.questionText}}</label>
+                <div *ngFor="let ans of allAnswers; index as i">
+                        <input id={{i}} name="inlineRadioOptions" type="text" [value]="ans">
+                        <label *ngIf="(ans.questionID == qst.questionID)">{{ans.answerText}}</label>
+                </div>        
+            </div>
+        </form> 
+    </div>
+</div>
