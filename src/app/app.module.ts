@@ -15,18 +15,21 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { Globals } from './globals';
 
-
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AboutComponent } from './about/about.component';
 import { AnswersComponent } from './answers/answers.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { LanguageStatisticsComponent } from './statistics/language-statistics/language-statistics.component';
+import { UserStatisticsComponent } from './statistics/user-statistics/user-statistics.component';
 import { TestComponent } from './test/test.component';
-import { SubjectService } from '../services/subject.service';
-import { LanguageService } from '../services/language.service';
-import { QuestionService } from '../services/questions.service';
-import { AnswersService } from '../services/answers.service';
+
+import { SubjectService } from 'services/subject.service';
+import { StatisticsService } from 'services/statistics.service';
+import { LanguageService } from 'services/language.service';
+import { QuestionService } from 'services/questions.service';
+import { AnswersService } from 'services/answers.service';
 
 @NgModule({
   imports: [
@@ -51,9 +54,11 @@ import { AnswersService } from '../services/answers.service';
     AnswersComponent,
     StatisticsComponent,
     TestComponent,
+    LanguageStatisticsComponent,
+    UserStatisticsComponent,
 
   ],
-  providers: [ Globals, SubjectService, LanguageService, QuestionService, AnswersService ],
+  providers: [ Globals, SubjectService, LanguageService, QuestionService, AnswersService, StatisticsService ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
