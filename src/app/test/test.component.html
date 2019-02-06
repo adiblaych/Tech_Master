@@ -51,9 +51,9 @@
                 <div class="card-body">
                     <div>
                         <tabset>
-                            <tab name="easy" heading="קל" id="tab1">שאלות ברמה 1</tab>
-                            <tab name="medium" heading="בינוני" id="tab2">שאלות ברמה 2 </tab>
-                            <tab name="hard" heading="קשה" id="tab3">שאלות ברמה 3 </tab>
+                            <tab name="easy" heading="קל" id="tab1" (select)="setLevel(1)">שאלות ברמה 1</tab>
+                            <tab name="medium" heading="בינוני" id="tab2" (select)="setLevel(2)">שאלות ברמה 2 </tab>
+                            <tab name="hard" heading="קשה" id="tab3" (select)="setLevel(3)">שאלות ברמה 3 </tab>
                         </tabset>
                     </div>
                     <div class="input-demo radio-demo">

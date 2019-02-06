@@ -42,6 +42,9 @@ export class TestComponent implements OnInit {
   showTest: Boolean = false;
   answersTest: string;
   x = 0;
+  selectedLevel: number = 1;
+  filteredQuestions: Questions[];
+
   constructor(private languageService: LanguageService, private questionsService: QuestionService,
     private answersService: AnswersService) {
   }
@@ -92,30 +95,33 @@ export class TestComponent implements OnInit {
   nextQuestion() {
     this.foreword = this.selectedLang.foreword;
     // שמירת התשובה שנבחרה
-    this.currentQuiz = this.questionsByLang[this.index];
+    this.currentQuiz = this.filteredQuestions[this.index];
    // שליפת התשובות לשאלה הנוכחית
     this.questionId = this.currentQuiz.questionID;
     this.answersService.getAnswersByQuestionId(this.questionId)
       .subscribe(data => {
-      this.answersByQuestion = data
+        this.answersByQuestion = data
+
         this.answersByQuestion.forEach(ans => {
           // שמירת התשובה הנכונה לכל שאלה
           if (ans.correctAnswer === true) {
             this.answers[this.index] = ans.answerText;
           }
         });
-            if (this.index > 0) {
-              // שמירת התשובה של המשתמש
-              this.answersUser[this.index] = this.answersTest;
-              // סך התשובות הנכונות
-              if (this.answers[this.index] === this.answersUser[this.index]) {
-                this.numTrue++;
-              }
-            }
-            if (this.numQst === this.index + 1) {
-              this.ngIf = 0;
-            }
-            this.index++;
+
+        if (this.index > 0) {
+          // שמירת התשובה של המשתמש
+          this.answersUser[this.index] = this.answersTest;
+          // סך התשובות הנכונות
+          if (this.answers[this.index] === this.answersUser[this.index]) {
+            this.numTrue++;
+          }
+        }
+        if (this.numQst === this.index + 1) {
+          this.ngIf = 0;
+        }
+
+        this.index++;
       }, error => { console.log(error) });
   }
 
@@ -124,6 +130,14 @@ export class TestComponent implements OnInit {
   }
   check() {
       this.showAns = 1;
+  }
+
+  setLevel(level) {
+    this.selectedLevel = level;
+  }
+
+  filterQuestions() {
+    this.filteredQuestions = this.questionsByLang.filter(question => question.questionLevel === this.selectedLevel);
   }
   // setCategoty(id) {
   //   console.log('setCategoty ' + id);
