@@ -75,6 +75,7 @@ export class TestComponent implements OnInit {
     this.questionsService.getQuestionsByLangId(this.primaryID)
       .subscribe(data => {
         this.questionsByLang = data;
+        this.setLevel(1);
         this.numQst = data.length;
         this.questionsByLang.forEach(qst => {
         this.answersService.getAnswersByQuestionId(qst.questionID)
@@ -134,6 +135,8 @@ export class TestComponent implements OnInit {
 
   setLevel(level) {
     this.selectedLevel = level;
+
+    this.filterQuestions();
   }
 
   filterQuestions() {
