@@ -3,4 +3,5 @@ export class Langueges {
     subLangueges: string;
     foreword: string;
     logo: string;
+    numOfUses: number;
 }
