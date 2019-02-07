@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SubjectService } from '../../services/subject.service';
 import { LanguageService } from '../../services/language.service';
 import { Langueges } from '../../services/models/langueges';
 import { Questions } from '../../services/models/questions';
@@ -7,8 +6,8 @@ import { Answers } from 'services/models/answers';
 import { QuestionService } from 'services/questions.service';
 import { AnswersService } from 'services/answers.service';
 import { FormControl} from '@angular/forms';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
-import { from } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { TestResultsComponent } from '../test-results/test-results.component';
 
 @Component({
   selector: 'app-test',
@@ -46,7 +45,7 @@ export class TestComponent implements OnInit {
   filteredQuestions: Questions[];
 
   constructor(private languageService: LanguageService, private questionsService: QuestionService,
-    private answersService: AnswersService) {
+    private answersService: AnswersService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -67,6 +66,7 @@ export class TestComponent implements OnInit {
     localStorage.setItem('logo', this.selectedLang.logo);
   }
   updateTest() {
+    this.showTest = true;
     this.showAns = 0;
     this.index = 0;
     this.ngIf = 1;
@@ -150,4 +150,19 @@ export class TestComponent implements OnInit {
   // private startQuiz() {
   //   this.currentAnswers = this.quizService.getQuiz();
   // }
+  showResult() {
+    const dialogRef = this.dialog.open(TestResultsComponent, { 
+      disableClose: true,
+      data: { correct: 0, total: 0 }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if(res.checkAnswers) {
+        this.showAns = 1;
+      }
+      else {
+        // should set new test
+      }
+    })
+  }
 }

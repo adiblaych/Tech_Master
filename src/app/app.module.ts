@@ -3,7 +3,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { MatDialogModule } from '@angular/material';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -30,6 +30,7 @@ import { StatisticsService } from 'services/statistics.service';
 import { LanguageService } from 'services/language.service';
 import { QuestionService } from 'services/questions.service';
 import { AnswersService } from 'services/answers.service';
+import { TestResultsComponent } from './test-results/test-results.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { AnswersService } from 'services/answers.service';
     ChartsModule,
     TabsModule.forRoot(),
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   declarations: [
     AppComponent,
@@ -56,8 +58,9 @@ import { AnswersService } from 'services/answers.service';
     TestComponent,
     LanguageStatisticsComponent,
     UserStatisticsComponent,
-
+    TestResultsComponent
   ],
+  entryComponents: [TestResultsComponent],
   providers: [ Globals, SubjectService, LanguageService, QuestionService, AnswersService, StatisticsService ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
