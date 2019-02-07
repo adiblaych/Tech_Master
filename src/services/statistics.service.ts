@@ -7,10 +7,8 @@ import { LanguagesStatistics } from './models/languagesStatistics';
 export class StatisticsService {
     constructor(private http: HttpClient) {}
 
-    response: LanguagesStatistics = {
-        languages: ['Node js', 'C#', 'CSS', 'JS', 'Ruby'],
-        values: [100, 150, 33, 12, 75]
-    }
+    response: LanguagesStatistics = { languages: ['Node js', 'C#', 'CSS', 'JS', 'Ruby']
+    , values: [100, 150, 33, 12, 75] }
 
     getLanguageStatistics(): Observable<LanguagesStatistics> {
         return of(this.response);

@@ -40,8 +40,7 @@ export class TestComponent implements OnInit {
   selectedTab: string;
   showTest: Boolean = false;
   answersTest: string;
-  x = 0;
-  selectedLevel: number = 1;
+  selectedLevel = 1;
   filteredQuestions: Questions[];
 
   constructor(private languageService: LanguageService, private questionsService: QuestionService,
@@ -66,31 +65,32 @@ export class TestComponent implements OnInit {
     localStorage.setItem('logo', this.selectedLang.logo);
   }
   updateTest() {
-    this.showTest = true;
+    this.languageService.updateNum(this.primaryID);
+    this.allAnswers = new Array<Answers>();
     this.showAns = 0;
     this.index = 0;
     this.ngIf = 1;
+    this.showTest = true;
     this.primaryID = this.selectedLang.primaryID;
     // שליפת השאלות לפי השפה שנבחרה
     this.questionsService.getQuestionsByLangId(this.primaryID)
       .subscribe(data => {
         this.questionsByLang = data;
         this.setLevel(1);
+        this.nextQuestion();
+        this.showTest = true;
         this.numQst = data.length;
         this.questionsByLang.forEach(qst => {
         this.answersService.getAnswersByQuestionId(qst.questionID)
       .subscribe(data1 => {
       this.answersByQuestion = data1
         this.answersByQuestion.forEach(ans => {
-          this.allAnswers[this.x++] = ans;
+          this.allAnswers.push(ans);
         });
       });
     });
-        this.nextQuestion();
-        this.showTest = true;
-        // localStorage.setItem('logo', this.selectedLang.logo);
       }, error => { console.log(error) });
-
+this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
 
   }
   nextQuestion() {
@@ -135,8 +135,9 @@ export class TestComponent implements OnInit {
 
   setLevel(level) {
     this.selectedLevel = level;
-
     this.filterQuestions();
+    this.index = 0;
+    this.nextQuestion();
   }
 
   filterQuestions() {

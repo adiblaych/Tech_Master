@@ -43,8 +43,7 @@
                     
                     <div class="input-demo radio-demo">
                         <form [formControl] = "form">
-                            <label class="question">{{currentQuiz.questionText}}</label>
-
+                            <label class="question">{{currentQuiz?.questionText}}</label>
                             <div *ngFor="let ans of answersByQuestion; index as i">
                                 <input id={{i}} [(ngModel)]="answersTest" name="inlineRadioOptions" type="radio" [value]="ans" required>
                                 <label>{{ans.answerText}}</label>
