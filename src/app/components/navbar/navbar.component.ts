@@ -24,11 +24,11 @@ export class NavbarComponent implements OnInit {
     public isCollapsed = true;
     s: { id: number; name: string; category: string; logo: string; }[];
 
-    constructor(location: Location,  private element: ElementRef, private router: Router, private subject: SubjectService) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private subject: SubjectService ,
+        private languegeService: LanguageService) {
       this.location = location;
       this.sidebarVisible = false;
-      this.langLogo = localStorage.getItem('logo');
-      // this.logoSrc = './assets/logos/' + subject.getSubject()['logo'] + '.png' ;
+      this.languegeService.onLanguegeSelected.subscribe(res => this.langLogo = res);
     }
 
     ngOnInit() {
@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
         this.sidebarClose();
-         var $layer: any = document.getElementsByClassName('close-layer')[0];
+         let $layer: any = document.getElementsByClassName('close-layer')[0];
          if ($layer) {
            $layer.remove();
            this.mobile_menu_visible = 0;
@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit {
           mainPanel.style.position = 'fixed';
         }
 
-        setTimeout(function(){
+        setTimeout(function() {
             toggleButton.classList.add('toggled');
         }, 500);
 
@@ -95,7 +95,7 @@ export class NavbarComponent implements OnInit {
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const html = document.getElementsByTagName('html')[0];
-        var $toggle = document.getElementsByClassName('navbar-toggler')[0];
+        let $toggle = document.getElementsByClassName('navbar-toggler')[0];
 
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
@@ -104,7 +104,7 @@ export class NavbarComponent implements OnInit {
         }
         const html = document.getElementsByTagName('html')[0];
 
-        if (this.mobile_menu_visible == 1) {
+        if (this.mobile_menu_visible === 1) {
             // $('html').removeClass('nav-open');
             html.classList.remove('nav-open');
             if ($layer) {
@@ -120,7 +120,7 @@ export class NavbarComponent implements OnInit {
                 $toggle.classList.add('toggled');
             }, 430);
 
-            var $layer = document.createElement('div');
+            let $layer = document.createElement('div');
             $layer.setAttribute('class', 'close-layer');
 
 
@@ -151,14 +151,14 @@ export class NavbarComponent implements OnInit {
     };
 
     getTitle() {
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
+      let titlee = this.location.prepareExternalUrl(this.location.path());
+      if (titlee.charAt(0) === '#') {
           titlee = titlee.slice( 2 );
       }
       titlee = titlee.split('/').pop();
 
-      for (var item = 0; item < this.listTitles.length; item++) {
-          if(this.listTitles[item].path === titlee) {
+      for (let item = 0; item < this.listTitles.length; item++) {
+          if (this.listTitles[item].path === titlee) {
               return this.listTitles[item].title;
           }
       }
@@ -168,5 +168,8 @@ export class NavbarComponent implements OnInit {
     changeLanguage(subject) {
         // todo: subscribe change
         this.logoSrc = './assets/logos/' + subject.getSubject()['logo'] + '.png' ;
+    }
+    updateLogo() {
+        this.langLogo = localStorage.getItem('logo');
     }
 }

@@ -65,7 +65,6 @@ export class TestComponent implements OnInit {
     localStorage.setItem('logo', this.selectedLang.logo);
   }
   updateTest() {
-    this.languageService.updateNum(this.primaryID);
     this.allAnswers = new Array<Answers>();
     this.showAns = 0;
     this.index = 0;
@@ -152,16 +151,15 @@ this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
   //   this.currentAnswers = this.quizService.getQuiz();
   // }
   showResult() {
-    const dialogRef = this.dialog.open(TestResultsComponent, { 
+    const dialogRef = this.dialog.open(TestResultsComponent, {
       disableClose: true,
       data: { correct: 0, total: 0 }
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      if(res.checkAnswers) {
+      if (res.checkAnswers) {
         this.showAns = 1;
-      }
-      else {
+      } else {
         // should set new test
       }
     })

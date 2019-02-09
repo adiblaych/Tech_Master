@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">בחר</h5>
+                    <h5 class="title">Choose Languege</h5>
                 </div>
 
                 <div class="card-body">
@@ -18,8 +18,8 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-secondary" (click)="updateTest()">Submit Button</button>
-                        <button type="reset" class="btn btn-secondary" (click)="resetLang()">Reset Button</button>
+                        <button type="submit" class="btn btn-secondary" (click)="updateTest()">Choose</button>
+                        <button type="reset" class="btn btn-secondary" (click)="resetLang()">Reset</button>
                     </div>
                 </div>
             </div>
@@ -35,18 +35,20 @@
                 <div class="card-body">
                     <div>
                         <tabset>
-                            <tab name="easy" heading="קל" id="tab1" (select)="setLevel(1)">שאלות ברמה 1</tab>
-                            <tab name="medium" heading="בינוני" id="tab2" (select)="setLevel(2)">שאלות ברמה 2 </tab>
-                            <tab name="hard" heading="קשה" id="tab3" (select)="setLevel(3)">שאלות ברמה 3 </tab>
+                            <tab name="easy" heading="Easy" id="tab1" (select)="setLevel(1)"></tab>
+                            <tab name="medium" heading="Middle" id="tab2" (select)="setLevel(2)"></tab>
+                            <tab name="hard" heading="Hard" id="tab3" (select)="setLevel(3)"></tab>
                         </tabset>
                     </div>
                     
                     <div class="input-demo radio-demo">
                         <form [formControl] = "form">
-                            <label class="question">{{currentQuiz?.questionText}}</label>
+                            <label class="question">{{index}}. {{currentQuiz?.questionText}}</label>
                             <div *ngFor="let ans of answersByQuestion; index as i">
-                                <input id={{i}} [(ngModel)]="answersTest" name="inlineRadioOptions" type="radio" [value]="ans" required>
-                                <label>{{ans.answerText}}</label>
+                                <label>
+                                    <input id={{i}} [(ngModel)]="answersTest" name="inlineRadioOptions" type="radio" [value]="ans" required>
+                                    {{ans.answerText}}
+                                </label>
                             </div>
 
                             <button *ngIf="ngIf" class="btn btn-secondary" (click)="nextQuestion()">Next</button>

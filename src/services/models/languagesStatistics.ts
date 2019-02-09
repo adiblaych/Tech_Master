@@ -1,4 +1,4 @@
 export class LanguagesStatistics {
     languages: String[];
-    values: Number[];
+    values: Number[]; 
 }

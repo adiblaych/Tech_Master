@@ -16,8 +16,5 @@ export class LanguageService {
   getLanguagesById(id: number) {
     return this.http.get<Langueges[]>(this.url + '/' + id);
   }
-  updateNum(primaryID: number) {
-    return this.http.post(this.url, primaryID);
-  }
 }
-}
+

@@ -10,7 +10,7 @@ export class StatisticsComponent implements OnInit {
 
   public gradientStroke;
   public chartColor;
-  public canvas : any;
+  public canvas: any;
   public ctx;
   public gradientFill;
 
@@ -18,33 +18,33 @@ export class StatisticsComponent implements OnInit {
   public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
 
   public lineChartType;
-  public lineChartData:Array<any>;
-  public lineChartOptions:any;
-  public lineChartLabels:Array<any>;
-  public lineChartColors:Array<any>
+  public lineChartData: Array<any>;
+  public lineChartOptions: any;
+  public lineChartLabels: Array<any>;
+  public lineChartColors: Array<any>
 
   public lineChartWithNumbersAndGridType;
-  public lineChartWithNumbersAndGridData:Array<any>;
-  public lineChartWithNumbersAndGridOptions:any;
-  public lineChartWithNumbersAndGridLabels:Array<any>;
-  public lineChartWithNumbersAndGridColors:Array<any>
+  public lineChartWithNumbersAndGridData: Array<any>;
+  public lineChartWithNumbersAndGridOptions: any;
+  public lineChartWithNumbersAndGridLabels: Array<any>;
+  public lineChartWithNumbersAndGridColors: Array<any>
 
   public lineChartGradientsNumbersType;
-  public lineChartGradientsNumbersData:Array<any>;
-  public lineChartGradientsNumbersOptions:any;
-  public lineChartGradientsNumbersLabels:Array<any>;
-  public lineChartGradientsNumbersColors:Array<any>
+  public lineChartGradientsNumbersData: Array<any>;
+  public lineChartGradientsNumbersOptions: any;
+  public lineChartGradientsNumbersLabels: Array<any>;
+  public lineChartGradientsNumbersColors: Array<any>
   // events
-  public chartClicked(e:any):void {
+  public chartClicked(e: any): void {
     console.log(e);
   }
 
-  public chartHovered(e:any):void {
+  public chartHovered(e: any): void {
     console.log(e);
   }
   public hexToRGB(hex, alpha) {
-    var r = parseInt(hex.slice(1, 3), 16),
-      g = parseInt(hex.slice(3, 5), 16),
+    const r = parseInt(hex.slice(1, 3), 16),
+    const g = parseInt(hex.slice(3, 5), 16),
       b = parseInt(hex.slice(5, 7), 16);
 
     if (alpha) {
