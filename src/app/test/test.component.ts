@@ -16,7 +16,6 @@ import { TestResultsComponent } from '../test-results/test-results.component';
 })
 export class TestComponent implements OnInit {
   public subjectList: Array<Object>;
-  form = new FormControl('');
   questionsByLang: Questions[];
   answersByQuestion: Answers[];
   answersUser = {}; // תשובות המשתמש
@@ -37,8 +36,8 @@ export class TestComponent implements OnInit {
   primaryID = 1;
   foreword: string;
   langName: string;
-  selectedTab: string;
   showTest: Boolean = false;
+  showLanguage: Boolean = true;
   answersTest: string;
   selectedLevel = 1;
   filteredQuestions: Questions[];
@@ -70,32 +69,36 @@ export class TestComponent implements OnInit {
     this.index = 0;
     this.ngIf = 1;
     this.showTest = true;
+    this.showLanguage = false;
     this.primaryID = this.selectedLang.primaryID;
     // שליפת השאלות לפי השפה שנבחרה
     this.questionsService.getQuestionsByLangId(this.primaryID)
       .subscribe(data => {
-        this.questionsByLang = data;
-        this.setLevel(1);
-        this.nextQuestion();
-        this.showTest = true;
-        this.numQst = data.length;
-        this.questionsByLang.forEach(qst => {
-        this.answersService.getAnswersByQuestionId(qst.questionID)
-      .subscribe(data1 => {
-      this.answersByQuestion = data1
-        this.answersByQuestion.forEach(ans => {
-          this.allAnswers.push(ans);
-        });
-      });
-    });
+          this.questionsByLang = data;
+          this.setLevel(1);
+          this.nextQuestion();
+          this.showTest = true;
+          this.numQst = data.length;
+          this.questionsByLang.forEach(qst => {
+          this.answersService.getAnswersByQuestionId(qst.questionID)
+              .subscribe(data1 => {
+                  this.answersByQuestion = data1
+                    this.answersByQuestion.forEach(ans => {
+                      this.allAnswers.push(ans);
+                    });
+              });
+          });
       }, error => { console.log(error) });
-this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
+  this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
 
   }
   nextQuestion() {
     this.foreword = this.selectedLang.foreword;
     // שמירת התשובה שנבחרה
     this.currentQuiz = this.filteredQuestions[this.index];
+    if(this.index + 1 === this.filteredQuestions.length) {
+      this.ngIf = 0;
+    }
    // שליפת התשובות לשאלה הנוכחית
     this.questionId = this.currentQuiz.questionID;
     this.answersService.getAnswersByQuestionId(this.questionId)
@@ -153,15 +156,22 @@ this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
   showResult() {
     const dialogRef = this.dialog.open(TestResultsComponent, {
       disableClose: true,
-      data: { correct: 0, total: 0 }
+      data: { correct: this.numTrue, total: this.numQst }
     });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res.checkAnswers) {
         this.showAns = 1;
       } else {
-        // should set new test
+        this.resetData();
       }
+
+      this.showTest = false;
     })
+  }
+
+  resetData() {
+    this.showLanguage = true;
+    this.selectedLang = undefined;
   }
 }

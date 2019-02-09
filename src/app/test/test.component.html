@@ -2,16 +2,16 @@
 
 <div class="main-content">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" *ngIf="showLanguage">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">Choose Languege</h5>
+                    <h5 class="title">Choose Language</h5>
                 </div>
 
                 <div class="card-body">
                     <div role="form" class="lenForm">
                         <div class="form-group">
-                            <label>Selects languege</label>
+                            <label>Selects language</label>
 
                             <select class="form-control" [(ngModel)]="selectedLang" (change)="getSubLang()">
                                 <option *ngFor="let Plang of PlangList" [ngValue]="Plang">{{Plang.primaryName}}</option>
@@ -42,7 +42,7 @@
                     </div>
                     
                     <div class="input-demo radio-demo">
-                        <form [formControl] = "form">
+                        <form>
                             <label class="question">{{index}}. {{currentQuiz?.questionText}}</label>
                             <div *ngFor="let ans of answersByQuestion; index as i">
                                 <label>
@@ -66,8 +66,8 @@
                 <label>{{qst.questionText}}</label>
 
                 <div *ngFor="let ans of allAnswers; index as i">
-                        <input id={{i}} name="inlineRadioOptions" type="text" [value]="ans">
-                        <label *ngIf="(ans.questionID == qst.questionID)">{{ans.answerText}}</label>
+                        <input type="checkbox" *ngIf="(ans.questionID == qst.questionID)" id={{i}} name="inlineRadioOptions" [checked]="ans.correctAnswer">
+                        <label *ngIf="(ans.questionID == qst.questionID)" [class.correct]="ans.correctAnswer">{{ans.answerText}}</label>
                 </div>
             </div>
         </form>

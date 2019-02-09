@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { LanguagesStatistics } from './models/languagesStatistics';
 import { Langueges } from './models/langueges';
 import { LanguageService } from '../services/language.service';
+
 @Injectable()
 export class StatisticsService {
     PlangList: Langueges[];
     langueges: Langueges[];
     nameLang: string[];
     uses: number[];
+
     constructor(private http: HttpClient, private languageService: LanguageService) {
         this.languageService.getPLanguages()
       .subscribe(data => { this.PlangList = data }, error => { console.log(error) });
