@@ -43,9 +43,13 @@ export class StatisticsComponent implements OnInit {
     console.log(e);
   }
   public hexToRGB(hex, alpha) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
+
+    // var r = parseInt(hex.slice(1, 3), 16);
+    // var g = parseInt(hex.slice(3, 5), 16);
+    // var b = parseInt(hex.slice(5, 7), 16);
+    let r = parseInt(hex.slice(1, 3), 16);
+    let  g = parseInt(hex.slice(3, 5), 16);
+    let  b = parseInt(hex.slice(5, 7), 16);
 
     if (alpha) {
       return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
@@ -178,25 +182,25 @@ export class StatisticsComponent implements OnInit {
     this.gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
 
     this.lineChartData = [
-        {
-          label: "Active Users",
-          pointBorderWidth: 2,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 1,
-          pointRadius: 4,
-          fill: true,
-          borderWidth: 2,
-          data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
-        }
-      ];
-      this.lineChartColors = [
-       {
-         borderColor: "#f96332",
-         pointBorderColor: "#FFF",
-         pointBackgroundColor: "#f96332",
-         backgroundColor: this.gradientFill
-       }
-     ];
+      {
+        label: "Active Users",
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 2,
+        data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
+      }
+    ];
+    this.lineChartColors = [
+      {
+        borderColor: "#f96332",
+        pointBorderColor: "#FFF",
+        pointBackgroundColor: "#f96332",
+        backgroundColor: this.gradientFill
+      }
+    ];
     this.lineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.lineChartOptions = this.gradientChartOptionsConfiguration;
 
@@ -214,25 +218,25 @@ export class StatisticsComponent implements OnInit {
     this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
 
     this.lineChartWithNumbersAndGridData = [
-        {
-          label: "Email Stats",
-           pointBorderWidth: 2,
-           pointHoverRadius: 4,
-           pointHoverBorderWidth: 1,
-           pointRadius: 4,
-           fill: true,
-           borderWidth: 2,
-          data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
-        }
-      ];
-      this.lineChartWithNumbersAndGridColors = [
-       {
-         borderColor: "#18ce0f",
-         pointBorderColor: "#FFF",
-         pointBackgroundColor: "#18ce0f",
-         backgroundColor: this.gradientFill
-       }
-     ];
+      {
+        label: "Email Stats",
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 2,
+        data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
+      }
+    ];
+    this.lineChartWithNumbersAndGridColors = [
+      {
+        borderColor: "#18ce0f",
+        pointBorderColor: "#FFF",
+        pointBackgroundColor: "#18ce0f",
+        backgroundColor: this.gradientFill
+      }
+    ];
     this.lineChartWithNumbersAndGridLabels = ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"];
     this.lineChartWithNumbersAndGridOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
 
@@ -250,70 +254,70 @@ export class StatisticsComponent implements OnInit {
 
 
     this.lineChartGradientsNumbersData = [
-        {
-          label: "Active Countries",
-          pointBorderWidth: 2,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 1,
-          pointRadius: 4,
-          fill: true,
-          borderWidth: 1,
-          data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
-        }
-      ];
+      {
+        label: "Active Countries",
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 1,
+        data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
+      }
+    ];
     this.lineChartGradientsNumbersColors = [
-     {
-       backgroundColor: this.gradientFill,
-       borderColor: "#2CA8FF",
-       pointBorderColor: "#FFF",
-       pointBackgroundColor: "#2CA8FF",
-     }
-   ];
+      {
+        backgroundColor: this.gradientFill,
+        borderColor: "#2CA8FF",
+        pointBorderColor: "#FFF",
+        pointBackgroundColor: "#2CA8FF",
+      }
+    ];
     this.lineChartGradientsNumbersLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     this.lineChartGradientsNumbersOptions = {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        tooltips: {
-          bodySpacing: 4,
-          mode: "nearest",
-          intersect: 0,
-          position: "nearest",
-          xPadding: 10,
-          yPadding: 10,
-          caretPadding: 10
-        },
-        responsive: 1,
-        scales: {
-          yAxes: [{
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawBorder: false
-            }
-          }],
-          xAxes: [{
-            display: 0,
-            ticks: {
-              display: false
-            },
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawTicks: false,
-              display: false,
-              drawBorder: false
-            }
-          }]
-        },
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 15,
-            bottom: 15
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        bodySpacing: 4,
+        mode: "nearest",
+        intersect: 0,
+        position: "nearest",
+        xPadding: 10,
+        yPadding: 10,
+        caretPadding: 10
+      },
+      responsive: 1,
+      scales: {
+        yAxes: [{
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawBorder: false
           }
+        }],
+        xAxes: [{
+          display: 0,
+          ticks: {
+            display: false
+          },
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawTicks: false,
+            display: false,
+            drawBorder: false
+          }
+        }]
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 15,
+          bottom: 15
         }
       }
+    }
 
     this.lineChartGradientsNumbersType = 'bar';
   }

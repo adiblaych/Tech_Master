@@ -96,7 +96,7 @@ export class TestComponent implements OnInit {
     this.foreword = this.selectedLang.foreword;
     // שמירת התשובה שנבחרה
     this.currentQuiz = this.filteredQuestions[this.index];
-    if(this.index + 1 === this.filteredQuestions.length) {
+    if (this.index + 1 === this.filteredQuestions.length) {
       this.ngIf = 0;
     }
    // שליפת התשובות לשאלה הנוכחית
@@ -132,6 +132,8 @@ export class TestComponent implements OnInit {
     this.selectedLang = null;
   }
   check() {
+     localStorage.setItem('numTrue', 'this.numTrue');
+     localStorage.setItem('numQst', 'this.numQst');
       this.showAns = 1;
   }
 
@@ -173,5 +175,6 @@ export class TestComponent implements OnInit {
   resetData() {
     this.showLanguage = true;
     this.selectedLang = undefined;
+    this.showAns = 0;
   }
 }
