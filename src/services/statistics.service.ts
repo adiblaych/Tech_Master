@@ -13,9 +13,6 @@ export class StatisticsService {
     uses: number[];
 
     constructor(private http: HttpClient, private languageService: LanguageService) {
-        this.languageService.getPLanguages()
-      .subscribe(data => { this.PlangList = data }, error => { console.log(error) });
-        this.langueges = this.PlangList.sort();
     }
 
     response: LanguagesStatistics = { languages: ['Node js', 'C#', 'CSS', 'JS', 'Ruby'] ,values: [100, 150, 33, 12, 75] }
