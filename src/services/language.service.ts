@@ -16,8 +16,8 @@ export class LanguageService {
   getLanguagesById(id: number) {
     return this.http.get<Langueges[]>(this.url + '/' + id);
   }
-  getLanguegesUses(name: string) {
-    return this.http.get<Langueges[]>(this.url + '/' + name);
+  getLanguegesUses() {
+    return this.http.get<Langueges[]>(this.url + '/GetPrimaryLanguegesByUsers');
   }
 }
 
