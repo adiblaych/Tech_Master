@@ -12,14 +12,14 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'about', component: AboutComponent },
   { path: 'answers', component: AnswersComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'test', component: TestComponent },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '', redirectTo: 'test', pathMatch: 'full' },
+  { path: '**', redirectTo: 'test' }
 ];
 
 @NgModule({
