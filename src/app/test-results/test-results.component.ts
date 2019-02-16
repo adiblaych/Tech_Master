@@ -7,11 +7,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./test-results.component.scss']
 })
 export class TestResultsComponent implements OnInit {
-
-  constructor(private _dialogRef: MatDialogRef<TestResultsComponent>, 
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) { }
+  numTrue: string;
+  numQst: string;
+  constructor(private _dialogRef: MatDialogRef<TestResultsComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.numTrue = localStorage.getItem('numTrue');
+       this.numQst = localStorage.getItem('numQst');
+  }
 
   ngOnInit() {
+
   }
 
   checkAnswers() {

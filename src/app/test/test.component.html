@@ -35,9 +35,9 @@
                 <div class="card-body">
                     <div>
                         <tabset>
-                            <tab name="easy" heading="Easy" id="tab1" (select)="setLevel(1)"></tab>
-                            <tab name="medium" heading="Middle" id="tab2" (select)="setLevel(2)"></tab>
                             <tab name="hard" heading="Hard" id="tab3" (select)="setLevel(3)"></tab>
+                            <tab name="medium" heading="Middle" id="tab2" (select)="setLevel(2)"></tab>
+                            <tab name="easy" heading="Easy" id="tab1" (select)="setLevel(1)"></tab>
                         </tabset>
                     </div>
                     
@@ -63,13 +63,14 @@
 
         <form *ngIf="showAns">
             <div *ngFor="let qst of questionsByLang; index as i">
-                <label>{{qst.questionText}}</label>
+                <label>{{i+1}}. {{qst.questionText}}</label>
 
                 <div *ngFor="let ans of allAnswers; index as i">
                         <input type="checkbox" *ngIf="(ans.questionID == qst.questionID)" id={{i}} name="inlineRadioOptions" [checked]="ans.correctAnswer">
                         <label *ngIf="(ans.questionID == qst.questionID)" [class.correct]="ans.correctAnswer">{{ans.answerText}}</label>
                 </div>
             </div>
+            <button *ngIf="!ngIf" class="btn btn-secondary" (click)="resetData()">Finish</button>
         </form>
     </div>
 </div>
