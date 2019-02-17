@@ -21,12 +21,14 @@ export class LanguageStatisticsComponent implements OnInit {
     this.statisticsService.getLanguageStatistics().
     subscribe(data => {
         this.PlangList = data
-      //   this.PlangList.forEach(lang => {
-      //         this.nameLang.push(lang.subLangueges);
-      //         this.uses.push(lang.numOfUses);
-      //  });
-      this.nameLang = ['c#', 'node.js'];
-      this.uses = [5, 7];
+         this.PlangList.forEach(lang => {
+           console.log(lang.primaryName);
+           console.log(lang.numOfUses);
+               this.nameLang.push(lang.primaryName);
+               this.uses.push(lang.numOfUses);
+        });
+     // this.nameLang = ['c#', 'node.js'];
+     // this.uses = [5, 7];
        this.createPieChart(this.nameLang, this.uses);
    }, error => { console.log(error) });
   }
