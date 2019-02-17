@@ -10,9 +10,9 @@ declare const Chart;
   styleUrls: ['./language-statistics.component.scss']
 })
 export class LanguageStatisticsComponent implements OnInit {
-  PlangList: Langueges[];
-  nameLang: string[];
-  uses: number[];
+  PlangList: Langueges[] = [];
+  nameLang: string[] = [];
+  uses: number[] = [];
   colors: String[] = ['#F47F09', '#0CF517', '#0CF1F5', '#F50CF5', '#F50C4C', '#0C6FF5', '#E8EF0D', '#960DEF'];
 
   constructor(private statisticsService: StatisticsService) { }
@@ -21,10 +21,12 @@ export class LanguageStatisticsComponent implements OnInit {
     this.statisticsService.getLanguageStatistics().
     subscribe(data => {
         this.PlangList = data
-        this.PlangList.forEach(lang => {
-              this.nameLang.push(lang.subLangueges);
-              this.uses.push(lang.numOfUses);
-       });
+      //   this.PlangList.forEach(lang => {
+      //         this.nameLang.push(lang.subLangueges);
+      //         this.uses.push(lang.numOfUses);
+      //  });
+      this.nameLang = ['c#', 'node.js'];
+      this.uses = [5, 7];
        this.createPieChart(this.nameLang, this.uses);
    }, error => { console.log(error) });
   }
