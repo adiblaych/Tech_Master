@@ -3,5 +3,5 @@ export class Questions {
     questionText: string;
     questionLevel: number;
     languegeID: number;
-    matarial: string;
+    site: string;
 }
