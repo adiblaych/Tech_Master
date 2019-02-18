@@ -64,7 +64,7 @@ export class TestComponent implements OnInit {
   updateTest() {
     this.primaryID = this.selectedLang.primaryID;
     this.foreword = this.selectedLang.foreword;
-    this.langName = this.selectedLang.subLangueges;
+    this.langName = this.selectedLang.primaryName;
     this.showAns = 0;
     this.showTest = true;
     this.showLanguage = false;
@@ -73,9 +73,12 @@ export class TestComponent implements OnInit {
     this.questionsService.getQuestionsByLangId(this.primaryID)
       .subscribe(data => {
           this.questionsByLang = data;
+          console.log(this.questionsByLang);
+          this.site = this.questionsByLang[0].matrial;
           forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID))
          ).subscribe(res => {
            console.log(res);
+           
            res.forEach(ans => {
              this.allAnswers[ans[0].questionID] = ans;
            })
@@ -86,7 +89,6 @@ export class TestComponent implements OnInit {
           //     this.answersService.getAnswersByQuestionId(qst.questionID).subscribe(ans => {
           //         this.allAnswers[qst.questionID] = ans;
           //     });
-          //     this.site = qst.matrial;
           // });
       }, error => { console.log(error) });
 
