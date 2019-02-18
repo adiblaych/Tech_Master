@@ -1,0 +1,16 @@
+:host {
+    position: relative;
+    height: 100%;
+    widows: 100%;
+    display: block;
+
+    div.buttons {
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+    }
+    button.btn.btn-secondary {
+        display: inline-block;
+        float: right;
+    }
+}

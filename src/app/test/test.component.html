@@ -8,18 +8,18 @@
                     <h5 class="title">Choose Language</h5>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body choose-language">
                     <div role="form" class="lenForm">
                         <div class="form-group">
-                            <label>Selects language</label>
-
-                            <select class="form-control" [(ngModel)]="selectedLang" (change)="getSubLang()">
+                            <select class="form-control select-language" [(ngModel)]="selectedLang" (change)="getSubLang()">
                                 <option *ngFor="let Plang of PlangList" [ngValue]="Plang">{{Plang.primaryName}}</option>
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-secondary" (click)="updateTest()">Choose</button>
-                        <button type="reset" class="btn btn-secondary" (click)="resetLang()">Reset</button>
+                        <button type="reset" class="btn btn-secondary" (click)="resetLang()"
+                            [class.disabled]="!selectedLang" [disabled]="!selectedLang">Reset</button>
+                        <button type="submit" class="btn btn-secondary" (click)="updateTest()"
+                            [class.disabled]="!selectedLang" [disabled]="!selectedLang">Choose</button>
                     </div>
                 </div>
             </div>
@@ -33,44 +33,52 @@
                 </div>
 
                 <div class="card-body">
-                    <div>
-                        <tabset>
-                            <tab name="hard" heading="Hard" id="tab3" (select)="setLevel(3)"></tab>
-                            <tab name="medium" heading="Middle" id="tab2" (select)="setLevel(2)"></tab>
-                            <tab name="easy" heading="Easy" id="tab1" (select)="setLevel(1)"></tab>
-                        </tabset>
-                    </div>
-                    
-                    <div class="input-demo radio-demo">
-                        <form>
-                            <label class="question">{{index}}. {{currentQuiz?.questionText}}</label>
-                            <div *ngFor="let ans of answersByQuestion; index as i">
-                                <label>
-                                    <input id={{i}} [(ngModel)]="answersTest" name="inlineRadioOptions" type="radio" [value]="ans" required>
-                                    {{ans.answerText}}
-                                </label>
-                            </div>
+                    <tabset>
+                        <tab name="easy" heading="Easy" id="tab1" (select)="setLevel(1)"></tab>
+                        <tab name="medium" heading="Medium" id="tab2" (select)="setLevel(2)"></tab>
+                        <tab name="hard" heading="Hard" id="tab3" (select)="setLevel(3)"></tab>
+                    </tabset>
 
-                            <button *ngIf="ngIf" class="btn btn-secondary" (click)="nextQuestion()">Next</button>
-                            <button *ngIf="!ngIf" class="btn btn-secondary" (click)="showResult()">Finish</button>
-                        </form>
-                    </div>
+                    <form class="questions">
+                        <label class="question">{{index}}. {{currentQuiz?.questionText}}</label>
+                        <div *ngFor="let ans of answersByQuestion; index as i">
+                            <label>
+                                <input id={{i}} [(ngModel)]="answersTest" name="inlineRadioOptions" type="radio" [value]="ans" required>
+                                {{ans.answerText}}
+                            </label>
+                        </div>
+
+                        <button *ngIf="!testIsFinished" class="btn btn-secondary next-question" (click)="nextQuestion()"
+                            [class.disabled]="!answersTest" [disabled]="!answersTest" >Next</button>
+                        <button *ngIf="testIsFinished" class="btn btn-secondary finish-test" (click)="finishTest()"
+                            [class.disabled]="!answersTest" [disabled]="!answersTest">Finish</button>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <!-- <label *ngIf="!ngIf">ענית נכון על {{numTrue}} מתוך {{numQst}} שאלות</label> -->
-
-        <form *ngIf="showAns">
-            <div *ngFor="let qst of questionsByLang; index as i">
-                <label>{{i+1}}. {{qst.questionText}}</label>
-
-                <div *ngFor="let ans of allAnswers; index as i">
-                        <input type="checkbox" *ngIf="(ans.questionID == qst.questionID)" id={{i}} name="inlineRadioOptions" [checked]="ans.correctAnswer">
-                        <label *ngIf="(ans.questionID == qst.questionID)" [class.correct]="ans.correctAnswer">{{ans.answerText}}</label>
+        <div *ngIf="showAns" class="card answers">
+            <form>
+                <div class="card-header">
+                    <h5 class="title">Answers</h5>
                 </div>
-            </div>
-            <button *ngIf="!ngIf" class="btn btn-secondary" (click)="resetData()">Finish</button>
-        </form>
+                <div class="card-body">
+                    <div class="test-answers">
+                        <div *ngFor="let qst of filteredQuestions; index as i">
+                            <label class="question-test">{{i+1}}. {{qst.questionText}}</label>
+
+                            <div *ngFor="let ans of allAnswers[qst.questionID]; index as j">
+                                <input type="checkbox" id={{j}} name="inlineRadioOptions" [checked]="ans.correctAnswer">
+                                <label [class.correct]="ans.correctAnswer" 
+                                [class.wrong]="!ans.correctAnswer && userAnswers[qst.questionID] === ans.answerID">{{ans.answerText}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary new-test" (click)="resetData()">Take another test</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>

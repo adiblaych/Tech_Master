@@ -43,10 +43,6 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
-     if (localStorage.length === 1) {
-        this.showLang = 1;
-        this.langLogo = localStorage.getItem('logo');
-     }
     }
 
     collapse() {
@@ -168,8 +164,5 @@ export class NavbarComponent implements OnInit {
     changeLanguage(subject) {
         // todo: subscribe change
         this.logoSrc = './assets/logos/' + subject.getSubject()['logo'] + '.png' ;
-    }
-    updateLogo() {
-        this.langLogo = localStorage.getItem('logo');
     }
 }

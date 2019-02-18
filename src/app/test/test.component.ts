@@ -18,13 +18,12 @@ export class TestComponent implements OnInit {
   public subjectList: Array<Object>;
   questionsByLang: Questions[];
   answersByQuestion: Answers[];
-  answersUser = {}; // תשובות המשתמש
-  answers = {}; // תשובות נכונות
-  ngIf = 1;
+  userAnswers = {}; // תשובות המשתמש
+  testIsFinished: boolean = false;
   numQst: number; // מספר שאלות לשפה
   numTrue = 0; // מספר תשובות נכונות
   showAns = 0;
-  allAnswers: Answers[]; // כל התשובות לכל השאלות
+  allAnswers:any = {}; // כל התשובות לכל השאלות
   selectedSubject: object;
   currentQuiz: Questions;
   selectedLang: Langueges;
@@ -38,7 +37,7 @@ export class TestComponent implements OnInit {
   langName: string;
   showTest: Boolean = false;
   showLanguage: Boolean = true;
-  answersTest: string;
+  answersTest:Answers;
   selectedLevel = 1;
   filteredQuestions: Questions[];
 
@@ -58,89 +57,86 @@ export class TestComponent implements OnInit {
   getSubLang() {
     this.languageService.getLanguagesById(this.primaryID)
       .subscribe(data => { this.langList = data }, error => { console.log(error) });
+
     this.primaryID = this.selectedLang.languegesID;
     this.foreword = this.selectedLang.foreword;
     this.langName = this.selectedLang.subLangueges;
-    localStorage.setItem('logo', this.selectedLang.logo);
   }
+
   updateTest() {
-    this.allAnswers = new Array<Answers>();
     this.showAns = 0;
-    this.index = 0;
-    this.ngIf = 1;
     this.showTest = true;
     this.showLanguage = false;
-    this.primaryID = this.selectedLang.primaryID;
+
     // שליפת השאלות לפי השפה שנבחרה
     this.questionsService.getQuestionsByLangId(this.primaryID)
       .subscribe(data => {
           this.questionsByLang = data;
-          this.setLevel(1);
-          this.nextQuestion();
-          this.showTest = true;
-          this.numQst = data.length;
+
           this.questionsByLang.forEach(qst => {
-          this.answersService.getAnswersByQuestionId(qst.questionID)
-              .subscribe(data1 => {
-                  this.answersByQuestion = data1
-                    this.answersByQuestion.forEach(ans => {
-                      this.allAnswers.push(ans);
-                    });
+              this.answersService.getAnswersByQuestionId(qst.questionID).subscribe(ans => {
+                  this.allAnswers[qst.questionID] = ans;
               });
           });
-      }, error => { console.log(error) });
-  this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
 
+          this.setLevel(1);
+          this.showTest = true;
+      }, error => { console.log(error) });
+
+    this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
   }
+
   nextQuestion() {
-    this.foreword = this.selectedLang.foreword;
-    // שמירת התשובה שנבחרה
+    if (this.index > 0) {
+      this.saveUserAnswer();
+    }
+
     this.currentQuiz = this.filteredQuestions[this.index];
+
     if (this.index + 1 === this.filteredQuestions.length) {
-      this.ngIf = 0;
+      this.testIsFinished = true;
+    }
+    else {
+      this.testIsFinished = false;
     }
    // שליפת התשובות לשאלה הנוכחית
     this.questionId = this.currentQuiz.questionID;
-    this.answersService.getAnswersByQuestionId(this.questionId)
-      .subscribe(data => {
-        this.answersByQuestion = data
 
-        this.answersByQuestion.forEach(ans => {
-          // שמירת התשובה הנכונה לכל שאלה
-          if (ans.correctAnswer === true) {
-            this.answers[this.index] = ans.answerText;
-          }
-        });
+    this.answersByQuestion = this.allAnswers[this.questionId];
 
-        if (this.index > 0) {
-          // שמירת התשובה של המשתמש
-          this.answersUser[this.index] = this.answersTest;
-          // סך התשובות הנכונות
-          if (this.answers[this.index] === this.answersUser[this.index]) {
-            this.numTrue++;
-          }
-        }
-        if (this.numQst === this.index + 1) {
-          this.ngIf = 0;
-        }
+    this.index++;
+  }
 
-        this.index++;
-      }, error => { console.log(error) });
+  saveUserAnswer() {
+      // שמירת התשובה של המשתמש
+      this.userAnswers[this.questionId] = this.answersTest.answerID;
+
+      // סך התשובות הנכונות
+      if (this.answersTest.correctAnswer) {
+        this.numTrue++;
+      }
+
+      this.answersTest = undefined;
+  }
+
+  finishTest() {
+    this.saveUserAnswer();
+    this.showResult();
   }
 
   resetLang() {
     this.selectedLang = null;
   }
+
   check() {
-     localStorage.setItem('numTrue', 'this.numTrue');
-     localStorage.setItem('numQst', 'this.numQst');
-      this.showAns = 1;
+    this.showAns = 1;
   }
 
   setLevel(level) {
     this.selectedLevel = level;
     this.filterQuestions();
     this.index = 0;
+    this.numTrue = 0;
     this.nextQuestion();
   }
 
@@ -157,8 +153,8 @@ export class TestComponent implements OnInit {
   // }
   showResult() {
     const dialogRef = this.dialog.open(TestResultsComponent, {
-      disableClose: true,
-      data: { correct: this.numTrue, total: this.numQst }
+      disableClose: true, width: '450px', height: '200px', autoFocus: false,
+      data: { correct: this.numTrue, total: this.filteredQuestions.length }
     });
 
     dialogRef.afterClosed().subscribe(res => {

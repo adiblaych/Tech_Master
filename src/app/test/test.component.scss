@@ -5,15 +5,52 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 tabset.tab-container {
-    direction: rtl;
+    margin-bottom: 20px;
+    display: block;
 }
-
+.card-body.choose-language button {
+    float: right;
+}
 .card label {
     display: block;
 }
 .correct {
     background-color: yellow;
 }
-.worng {
-    background-color: red;
+.wrong {
+    // background-color: rgb(194, 17, 17);
+    color: firebrick;
+    text-decoration: line-through;
+}
+select.select-language {
+    width: 20%;
+}
+form.questions {
+    height: 250px;
+}
+button.next-question, button.finish-test {
+    display: block;
+    bottom: 0;
+    position: absolute;
+    right: 10px;
+}
+.card.answers {
+    height: 460px;
+}
+label.question-test {
+    margin-top: 1em;
+}
+div.test-answers {
+    height: 335px;
+    overflow-y: auto;
+
+    label:not(.question-test){
+        display: inline-block;
+        margin-left: 10px;
+    }
+}
+button.new-test {
+    right: 0;
+    position: absolute;
+    margin-right: 10px;
 }

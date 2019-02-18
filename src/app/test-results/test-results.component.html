@@ -1,3 +1,5 @@
-<div>You answered {{numTrue}} correct answers of {{numQst}} questions</div>
-<button (click)="checkAnswers()">Check Answers</button>
-<button (click)="newTest()">Take another test</button>
+<span>You answered {{correct}} correct answers of {{total}} questions</span>
+<div class="buttons">
+    <button class="btn btn-secondary" (click)="newTest()">Take another test</button>
+    <button class="btn btn-secondary" (click)="checkAnswers()">Check Answers</button>
+</div>
