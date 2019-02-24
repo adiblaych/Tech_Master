@@ -7,6 +7,7 @@ import { QuestionService } from 'services/questions.service';
 import { AnswersService } from 'services/answers.service';
 import { MatDialog } from '@angular/material';
 import { TestResultsComponent } from '../test-results/test-results.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-test',
@@ -18,11 +19,12 @@ export class TestComponent implements OnInit {
   questionsByLang: Questions[];
   answersByQuestion: Answers[];
   userAnswers = {}; // תשובות המשתמש
-  testIsFinished: boolean = false;
+  testIsFinished = false;
   numQst: number; // מספר שאלות לשפה
   numTrue = 0; // מספר תשובות נכונות
   showAns = 0;
-  allAnswers:any = {}; // כל התשובות לכל השאלות
+  allAnswers: any = {}; // כל התשובות לכל השאלות
+  site: string; // קישור לאתר של השפה
   selectedSubject: object;
   currentQuiz: Questions;
   selectedLang: Langueges;
@@ -56,13 +58,12 @@ export class TestComponent implements OnInit {
   getSubLang() {
     this.languageService.getLanguagesById(this.primaryID)
       .subscribe(data => { this.langList = data }, error => { console.log(error) });
-
-    this.primaryID = this.selectedLang.languegesID;
-    this.foreword = this.selectedLang.foreword;
-    this.langName = this.selectedLang.subLangueges;
   }
 
   updateTest() {
+    this.primaryID = this.selectedLang.primaryID;
+    this.foreword = this.selectedLang.foreword;
+    this.langName = this.selectedLang.primaryName;
     this.showAns = 0;
     this.showTest = true;
     this.showLanguage = false;
@@ -74,15 +75,17 @@ export class TestComponent implements OnInit {
             return qst1.questionLevel - qst2.questionLevel
           });
 
-          this.questionsByLang.forEach(qst => {
-              this.answersService.getAnswersByQuestionId(qst.questionID).subscribe(ans => {
-                  this.allAnswers[qst.questionID] = ans;
-              });
-          });
+          this.site = this.questionsByLang[0].matrial;
 
-          this.selectedLevel = 1;
-          this.nextQuestion();
-          this.showTest = true;
+          forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID)))
+            .subscribe(res => {
+                res.forEach(ans => {
+                  this.allAnswers[ans[0].questionID] = ans;
+                })
+
+                this.selectedLevel = 1;
+                this.nextQuestion();
+            })
       }, error => { console.log(error) });
 
     this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
