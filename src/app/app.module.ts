@@ -3,7 +3,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule } from '@angular/material';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -41,6 +41,7 @@ import { TestResultsComponent } from './test-results/test-results.component';
     RouterModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    MatTabsModule,
     CommonModule,
     ChartsModule,
     TabsModule.forRoot(),
