@@ -33,11 +33,11 @@
                 </div>
 
                 <div class="card-body">
-                    <tabset>
-                        <tab name="easy" heading="Easy" id="tab1" (select)="setLevel(1)"></tab>
-                        <tab name="medium" heading="Medium" id="tab2" (select)="setLevel(2)"></tab>
-                        <tab name="hard" heading="Hard" id="tab3" (select)="setLevel(3)"></tab>
-                    </tabset>
+                    <mat-tab-group [selectedIndex]="selectedLevel - 1">
+                        <mat-tab label="Easy" disabled></mat-tab>
+                        <mat-tab label="Medium" disabled></mat-tab>
+                        <mat-tab label="Hard" disabled></mat-tab>
+                    </mat-tab-group>
 
                     <form class="questions">
                         <label class="question">{{index}}. {{currentQuiz?.questionText}}</label>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="card-body">
                     <div class="test-answers">
-                        <div *ngFor="let qst of filteredQuestions; index as i">
+                        <div *ngFor="let qst of questionsByLang; index as i">
                             <label class="question-test">{{i+1}}. {{qst.questionText}}</label>
 
                             <div *ngFor="let ans of allAnswers[qst.questionID]; index as j">

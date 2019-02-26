@@ -5,7 +5,6 @@ import { Questions } from '../../services/models/questions';
 import { Answers } from 'services/models/answers';
 import { QuestionService } from 'services/questions.service';
 import { AnswersService } from 'services/answers.service';
-import { FormControl} from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { TestResultsComponent } from '../test-results/test-results.component';
 import { forkJoin } from 'rxjs';
@@ -68,13 +67,16 @@ export class TestComponent implements OnInit {
     this.showAns = 0;
     this.showTest = true;
     this.showLanguage = false;
-
+    this.index = 0;
     // שליפת השאלות לפי השפה שנבחרה
     this.questionsService.getQuestionsByLangId(this.primaryID)
       .subscribe(data => {
-          this.questionsByLang = data;
-          console.log(this.questionsByLang);
+          this.questionsByLang = data.sort((qst1, qst2) => {
+            return qst1.questionLevel - qst2.questionLevel
+          });
+
           this.site = this.questionsByLang[0].matrial;
+<<<<<<< HEAD
           forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID))
          ).subscribe(res => {
            res.forEach(ans => {
@@ -83,6 +85,18 @@ export class TestComponent implements OnInit {
            this.setLevel(1);
           this.showTest = true;
          })
+=======
+
+          forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID)))
+            .subscribe(res => {
+                res.forEach(ans => {
+                  this.allAnswers[ans[0].questionID] = ans;
+                })
+
+                this.selectedLevel = 1;
+                this.nextQuestion();
+            })
+>>>>>>> 7faff13bdc5d82cfef2a269cda37b990d45b453c
       }, error => { console.log(error) });
 
     this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
@@ -92,12 +106,20 @@ export class TestComponent implements OnInit {
     if (this.index > 0) {
       this.saveUserAnswer();
     }
+<<<<<<< HEAD
     this.currentQuiz = this.filteredQuestions[this.index];
     if (this.index + 1 === this.filteredQuestions.length) {
+=======
+
+    this.currentQuiz = this.questionsByLang[this.index];
+
+    if (this.index + 1 === this.questionsByLang.length) {
+>>>>>>> 7faff13bdc5d82cfef2a269cda37b990d45b453c
       this.testIsFinished = true;
     } else {
       this.testIsFinished = false;
     }
+    this.selectedLevel = this.currentQuiz.questionLevel;
    // שליפת התשובות לשאלה הנוכחית
     this.questionId = this.currentQuiz.questionID;
 
@@ -131,6 +153,7 @@ export class TestComponent implements OnInit {
     this.showAns = 1;
   }
 
+<<<<<<< HEAD
   setLevel(level) {
     this.selectedLevel = level;
     this.filterQuestions();
@@ -142,10 +165,23 @@ export class TestComponent implements OnInit {
   filterQuestions() {
     this.filteredQuestions = this.questionsByLang.filter(question => question.questionLevel === this.selectedLevel);
   }
+=======
+  // filterQuestions() {
+  //   this.filteredQuestions = this.questionsByLang.filter(question => question.questionLevel === this.selectedLevel);
+  // }
+  // setCategoty(id) {
+  //   console.log('setCategoty ' + id);
+  //   this.selectedSubject = this.subjectService.getSubject(id);
+  //   // todo: update navbar
+  // }
+  // private startQuiz() {
+  //   this.currentAnswers = this.quizService.getQuiz();
+  // }
+>>>>>>> 7faff13bdc5d82cfef2a269cda37b990d45b453c
   showResult() {
     const dialogRef = this.dialog.open(TestResultsComponent, {
       disableClose: true, width: '450px', height: '200px', autoFocus: false,
-      data: { correct: this.numTrue, total: this.filteredQuestions.length }
+      data: { correct: this.numTrue, total: this.questionsByLang.length }
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -163,5 +199,6 @@ export class TestComponent implements OnInit {
     this.showLanguage = true;
     this.selectedLang = undefined;
     this.showAns = 0;
+    this.numTrue = 0;
   }
 }

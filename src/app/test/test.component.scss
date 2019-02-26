@@ -27,6 +27,8 @@ select.select-language {
 }
 form.questions {
     height: 250px;
+    padding: 15px;
+    box-sizing: border-box;
 }
 button.next-question, button.finish-test {
     display: block;
