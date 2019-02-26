@@ -17,15 +17,11 @@ export class StatisticsService {
 
     constructor(private http: HttpClient, private languageService: LanguageService) {
     }
-        // response: LanguagesStatistics = { languages: ['Node js', 'C#', 'CSS', 'JS', 'Ruby'] , values: [100, 150, 33, 12, 75] }
        getLanguageStatistics(): Observable<Langueges[]> {
        return  this.languageService.getLanguegesUses()
-        // return of(this.response);
-        // response.values should be array of number of users that made this test
     }
 
     getUserStatistics(): Observable<LanguagesStatistics> {
         return of();
-        // response.values should be array of grades (in percentages) of this test
     }
 }

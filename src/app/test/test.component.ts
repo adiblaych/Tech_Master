@@ -39,7 +39,7 @@ export class TestComponent implements OnInit {
   langName: string;
   showTest: Boolean = false;
   showLanguage: Boolean = true;
-  answersTest:Answers;
+  answersTest: Answers;
   selectedLevel = 1;
   filteredQuestions: Questions[];
 
@@ -77,19 +77,12 @@ export class TestComponent implements OnInit {
           this.site = this.questionsByLang[0].matrial;
           forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID))
          ).subscribe(res => {
-           console.log(res);
-           
            res.forEach(ans => {
              this.allAnswers[ans[0].questionID] = ans;
            })
            this.setLevel(1);
           this.showTest = true;
          })
-          // this.questionsByLang.forEach(qst => {
-          //     this.answersService.getAnswersByQuestionId(qst.questionID).subscribe(ans => {
-          //         this.allAnswers[qst.questionID] = ans;
-          //     });
-          // });
       }, error => { console.log(error) });
 
     this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
@@ -99,13 +92,10 @@ export class TestComponent implements OnInit {
     if (this.index > 0) {
       this.saveUserAnswer();
     }
-
     this.currentQuiz = this.filteredQuestions[this.index];
-
     if (this.index + 1 === this.filteredQuestions.length) {
       this.testIsFinished = true;
-    }
-    else {
+    } else {
       this.testIsFinished = false;
     }
    // שליפת התשובות לשאלה הנוכחית
@@ -152,14 +142,6 @@ export class TestComponent implements OnInit {
   filterQuestions() {
     this.filteredQuestions = this.questionsByLang.filter(question => question.questionLevel === this.selectedLevel);
   }
-  // setCategoty(id) {
-  //   console.log('setCategoty ' + id);
-  //   this.selectedSubject = this.subjectService.getSubject(id);
-  //   // todo: update navbar
-  // }
-  // private startQuiz() {
-  //   this.currentAnswers = this.quizService.getQuiz();
-  // }
   showResult() {
     const dialogRef = this.dialog.open(TestResultsComponent, {
       disableClose: true, width: '450px', height: '200px', autoFocus: false,
