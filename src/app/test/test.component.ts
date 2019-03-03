@@ -76,16 +76,6 @@ export class TestComponent implements OnInit {
           });
 
           this.site = this.questionsByLang[0].matrial;
-<<<<<<< HEAD
-          forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID))
-         ).subscribe(res => {
-           res.forEach(ans => {
-             this.allAnswers[ans[0].questionID] = ans;
-           })
-           this.setLevel(1);
-          this.showTest = true;
-         })
-=======
 
           forkJoin( this.questionsByLang.map(qst => this.answersService.getAnswersByQuestionId(qst.questionID)))
             .subscribe(res => {
@@ -96,7 +86,6 @@ export class TestComponent implements OnInit {
                 this.selectedLevel = 1;
                 this.nextQuestion();
             })
->>>>>>> 7faff13bdc5d82cfef2a269cda37b990d45b453c
       }, error => { console.log(error) });
 
     this.languageService.onLanguegeSelected.next(this.selectedLang.logo);
@@ -106,15 +95,10 @@ export class TestComponent implements OnInit {
     if (this.index > 0) {
       this.saveUserAnswer();
     }
-<<<<<<< HEAD
-    this.currentQuiz = this.filteredQuestions[this.index];
-    if (this.index + 1 === this.filteredQuestions.length) {
-=======
 
     this.currentQuiz = this.questionsByLang[this.index];
 
     if (this.index + 1 === this.questionsByLang.length) {
->>>>>>> 7faff13bdc5d82cfef2a269cda37b990d45b453c
       this.testIsFinished = true;
     } else {
       this.testIsFinished = false;
@@ -153,19 +137,6 @@ export class TestComponent implements OnInit {
     this.showAns = 1;
   }
 
-<<<<<<< HEAD
-  setLevel(level) {
-    this.selectedLevel = level;
-    this.filterQuestions();
-    this.index = 0;
-    this.numTrue = 0;
-    this.nextQuestion();
-  }
-
-  filterQuestions() {
-    this.filteredQuestions = this.questionsByLang.filter(question => question.questionLevel === this.selectedLevel);
-  }
-=======
   // filterQuestions() {
   //   this.filteredQuestions = this.questionsByLang.filter(question => question.questionLevel === this.selectedLevel);
   // }
@@ -177,7 +148,6 @@ export class TestComponent implements OnInit {
   // private startQuiz() {
   //   this.currentAnswers = this.quizService.getQuiz();
   // }
->>>>>>> 7faff13bdc5d82cfef2a269cda37b990d45b453c
   showResult() {
     const dialogRef = this.dialog.open(TestResultsComponent, {
       disableClose: true, width: '450px', height: '200px', autoFocus: false,
